@@ -3,8 +3,8 @@ import numpy as np
 
 ROBOT_RADIUS = 1.0
 WHEEL_RADIUS = 0.6
-HEADING_OFFSET = 0
-N = 5
+HEADING_OFFSET = 45
+N = 4
 
 def gen_kinematic_matrix(N, heading_offset = 0):
     del_angle = 360/N
@@ -20,7 +20,7 @@ def gen_kinematic_matrix(N, heading_offset = 0):
 def get_odometry_matrix(M):
     return np.linalg.pinv(M)[:2, :]
 
-def format_matrix_as_c_array(matrix, var_name="M_c_array", dtype="float"):
+def format_matrix_as_c_array(matrix, var_name="M_c_array", dtype="double"):
     rows, cols = matrix.shape
     c_array_str = f"{dtype} {var_name}[{rows}][{cols}] = {{\n"
     for r in range(rows):
@@ -42,7 +42,7 @@ MI = get_odometry_matrix(M)
 # print(MI)
 
 matrix_kinematic = format_matrix_as_c_array(M, "m_kinematic")
-matrix_odometry = format_matrix_as_c_array(MI, "m_odom#etry")
+matrix_odometry = format_matrix_as_c_array(MI, "m_odometry")
 
 print("// ---------- Matrix Kinematic ---------- //")
 print(matrix_kinematic)
