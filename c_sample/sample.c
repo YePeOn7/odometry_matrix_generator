@@ -40,20 +40,12 @@ void drive(float x, float y, float w, float headingOffset, int numOfWheels, floa
     }
 }
 
-void odometry(float MI[2][4], float t1, float t2, float t3, float t4, float angle, float output[2]) {
+void odometry(float MI[2][4], float T[4], float angle, float output[2]) {
     // Step 1: Create rotation matrix R (2x2)
     float rad = angle * M_PI / 180.0; // convert degrees to radians
     float R[2][2] = {
         {cos(rad), -sin(rad)},
         {sin(rad),  cos(rad)}
-    };
-
-    // Step 2: Create matrix T (4x1)
-    float T[4][1] = {
-        {t1},
-        {t2},
-        {t3},
-        {t4}
     };
 
     // Step 3: Multiply MI (2x4) by T (4x1) -> result M (2x1)
@@ -62,7 +54,7 @@ void odometry(float MI[2][4], float t1, float t2, float t3, float t4, float angl
     for(int i = 0; i < 2; i++) {
         M[i][0] = 0;
         for(int j = 0; j < 4; j++) {
-            M[i][0] += MI[i][j] * T[j][0];
+            M[i][0] += MI[i][j] * T[j];
         }
     }
 
@@ -78,7 +70,7 @@ void odometry(float MI[2][4], float t1, float t2, float t3, float t4, float angl
 int main() {
     int numOfWheels = 4;
     float motor[4];
-    float x = 0, y = 1, w = 0;
+    float x = 12, y = 10, w = 0; //input kecepatan robot
     float headingOffset = 45;
     // float wheelRadius = 0.05f;
     // float robotRadius = 0.2f;
@@ -102,10 +94,7 @@ int main() {
     float speedOutput[2];
     odometry(
       m_odometry, 
-      motor[0],
-      motor[1],
-      motor[2],
-      motor[3],
+      motor,
       0,
       speedOutput
     );
