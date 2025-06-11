@@ -20,7 +20,7 @@ def gen_kinematic_matrix(N, heading_offset = 0):
 def get_odometry_matrix(M):
     return np.linalg.pinv(M)[:2, :]
 
-def format_matrix_as_c_array(matrix, var_name="M_c_array", dtype="double"):
+def format_matrix_as_c_array(matrix, var_name="M_c_array", dtype="float"):
     rows, cols = matrix.shape
     c_array_str = f"{dtype} {var_name}[{rows}][{cols}] = {{\n"
     for r in range(rows):
