@@ -3,8 +3,8 @@ import numpy as np
 
 ROBOT_RADIUS = 1.0
 WHEEL_RADIUS = 0.6
-HEADING_OFFSET = 45
-N = 4
+HEADING_OFFSET = 0
+N = 6
 
 def gen_kinematic_matrix(N, heading_offset = 0):
     del_angle = 360/N
