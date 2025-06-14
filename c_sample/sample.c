@@ -82,6 +82,22 @@ void odometry2(float T[4], float angle_robot, float output[2]) {
     output[1] = y * gain;
 }
 
+void odometry3(int N, float *T, float angle_robot, float output[2], float heading_offset) {
+    float gain = 1; // ini g ada di papernya, cuma setelah dicoba kayaknya butuh
+    float x = 0;
+    float y = 0;
+    float d_angle = 360/(float)N;
+
+    for(int i = 0; i < N; i++){
+        float a_rad = (heading_offset + angle_robot + i * d_angle) * M_PI / 180; // 45 karena sudut roda pertama terhadap roda 45, 90 karena jarak masing2 roda 90 
+        x += -sinf(a_rad) * T[i] / 2;
+        y += cos(a_rad) * T[i] / 2;
+    }
+
+    output[0] = x * gain;
+    output[1] = y * gain;
+}
+
 int main() {
     int numOfWheels = 4;
     float motor[4];
