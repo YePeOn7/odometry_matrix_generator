@@ -65,7 +65,8 @@ void odometry(int N, float* MI, float* T, float angle, float* output) {
   }
 }
 
-// source: https://www.researchgate.net/publication/348272315_Implementation_Kinematics_Modeling_and_Odometry_of_Four_Omni_Wheel_Mobile_Robot_on_The_Trajectory_Planning_and_Motion_Control_Based_Microcontroller, tapi dibuat lebih general
+// source: https://www.researchgate.net/publication/348272315_Implementation_Kinematics_Modeling_and_Odometry_of_Four_Omni_Wheel_Mobile_Robot_on_The_Trajectory_Planning_and_Motion_Control_Based_Microcontroller, 
+// tapi dibuat lebih general
 void odometry2(int N, float* T, float angle_robot, float output[2], float heading_offset) {
   float gain = 0.8;  // ini g ada di papernya, cuma setelah dicoba kayaknya butuh
   float x = 0;
@@ -73,9 +74,9 @@ void odometry2(int N, float* T, float angle_robot, float output[2], float headin
   float d_angle = 360 / (float)N;
 
   for (int i = 0; i < N; i++) {
-    float a_rad = (heading_offset + angle_robot + i * d_angle) * M_PI / 180;  // 45 karena sudut roda pertama terhadap roda 45, 90 karena jarak masing2 roda 90
+    float a_rad = (heading_offset + angle_robot + i * d_angle) * M_PI / 180;
     x += -sinf(a_rad) * T[i] / 2;
-    y += cos(a_rad) * T[i] / 2;
+    y += cosf(a_rad) * T[i] / 2;
   }
 
   output[0] = x * gain;
