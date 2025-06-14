@@ -113,7 +113,7 @@ int main() {
       0,
       speedOutput
     );
-    printf("------------ speed output ------------\n");
+    printf("------------ speed output odometry 1------------\n");
     printf("x: %.2f, y: %.2f\n", speedOutput[0], speedOutput[1]);
 
     odometry2(
@@ -121,7 +121,7 @@ int main() {
       0,
       speedOutput
     );
-    printf("------------ speed output ------------\n");
+    printf("------------ speed output odometry 2 (from papaer but add gain)------------\n");
     printf("x: %.2f, y: %.2f\n", speedOutput[0], speedOutput[1]);
 
     return 0;
